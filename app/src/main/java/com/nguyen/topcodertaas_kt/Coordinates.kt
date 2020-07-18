@@ -20,14 +20,14 @@ class Coordinates(context: Context, filename: String) {
     }
 
     // search in the list of coordinates for the country whose abbreviation matches the parameter
-    fun search(abbreviation: String) : Int {
+    private fun search(abbreviation: String) : Int {
         var left = 0
         var right = list.size - 1
         while (left <= right) {
             val middle = left + (right - left) / 2
-            if (list.get(middle).abbreviation.compareTo(abbreviation) == 0) {
+            if (list[middle].abbreviation.compareTo(abbreviation) == 0) {
                 return middle
-            } else if (list.get(middle).abbreviation.compareTo(abbreviation) < 0) {
+            } else if (list[middle].abbreviation < abbreviation) {
                 left = middle + 1
             } else {
                 right = middle - 1
@@ -39,11 +39,11 @@ class Coordinates(context: Context, filename: String) {
     // converts a country abbreviation to a latitude-longitude pair
     fun toLatLng(country: String): LatLng? {
         val index = search(country)
-        if (index != -1) {
-            val coordinate = list.get(index)
-            return LatLng(coordinate.latitude, coordinate.longitude)
+        return if (index != -1) {
+            val coordinate = list[index]
+            LatLng(coordinate.latitude, coordinate.longitude)
         } else {
-            return null
+            null
         }
     }
 }

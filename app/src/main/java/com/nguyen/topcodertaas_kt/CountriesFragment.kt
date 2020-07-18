@@ -1,6 +1,7 @@
 package com.nguyen.topcodertaas_kt
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -10,9 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nguyen.topcodertaas_kt.databinding.FragmentCountriesBinding
 
 class CountriesFragment : Fragment() {
-    lateinit var countriesViewModel: CountriesViewModel
-    lateinit var binding: FragmentCountriesBinding
-    lateinit var adapter: CountriesAdapter
+    companion object {
+        const val TAG = "CountriesFragment"
+    }
+
+    private lateinit var countriesViewModel: CountriesViewModel
+    private lateinit var binding: FragmentCountriesBinding
+    private val countries = mutableListOf<Country>()
+    private val adapter = CountriesAdapter(countries)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +32,6 @@ class CountriesFragment : Fragment() {
     ): View? {
         countriesViewModel = ViewModelProvider(this).get(CountriesViewModel::class.java)
         binding = FragmentCountriesBinding.inflate(inflater, container, false)
-        adapter = CountriesAdapter()
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
@@ -47,7 +52,13 @@ class CountriesFragment : Fragment() {
 
     fun fetchPage(page: Int) {
         countriesViewModel.getCountries(page).observe(viewLifecycleOwner, Observer {
-            adapter.update(it)
+            Log.d(TAG, "fetchPage $page, list size: ${it.count()}")
+            val size = countries.count()
+            Log.d(TAG, "update, current size: $size, new list size: ${it.count()}")
+            countries.addAll(it)
+            // binding.recyclerView.post {
+                adapter.notifyItemRangeInserted(size, it.size)
+            // }
         })
     }
 

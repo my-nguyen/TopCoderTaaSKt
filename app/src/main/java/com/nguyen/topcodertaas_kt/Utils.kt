@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.os.Environment
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -16,7 +15,7 @@ import java.io.FileOutputStream
 
 class Utils {
     companion object {
-        val WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 101
+        const val WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 101
 
         // take a screen shot of the current fragment and share it
         fun shareScreenShot(fragment: Fragment) {
@@ -27,48 +26,29 @@ class Utils {
         }
 
         // request permission to write data to external storage
-        fun onRequestPermissionsResult(
-            fragment: Fragment,
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        ) {
+        fun onRequestPermissionsResult(fragment: Fragment, grantResults: IntArray) {
             if (grantResults.count() == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(
-                    fragment.context,
-                    "Write External Storage permission granted",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(fragment.context, "Write External Storage permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 if (fragment.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 } else {
-                    Toast.makeText(
-                        fragment.context,
-                        "Write External Storage permission denied",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(fragment.context, "Write External Storage permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         // what to do when permission is granted
-        fun getPermission(fragment: Fragment) {
-            if (ContextCompat.checkSelfPermission(
-                    fragment.requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+        private fun getPermission(fragment: Fragment) {
+            if (ContextCompat.checkSelfPermission(fragment.requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
                 if (fragment.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 }
-                fragment.requestPermissions(
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST
-                )
+                fragment.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST)
             }
         }
 
         // take a screen shot, except in screen with google map
-        fun takeScreenshot(activity: Activity): Bitmap {
+        private fun takeScreenshot(activity: Activity): Bitmap {
             val rootView = activity.window.decorView.rootView
             rootView.setDrawingCacheEnabled(true)
             val bitmap = Bitmap.createBitmap(rootView.drawingCache)
@@ -111,10 +91,6 @@ class Utils {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-
-        fun toString(number: Int): String {
-            return String.format("%,d", number)
         }
     }
 }

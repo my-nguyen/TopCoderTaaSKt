@@ -4,16 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
-class MapViewModel() : ViewModel() {
+class MapViewModel : ViewModel() {
 
     companion object {
-        val TAG = "CovidMapViewModel"
+        const val TAG = "CovidMapViewModel"
     }
 
     val data = CovidRepository.getAllCountries()
 
     fun getAllCountries() : LiveData<List<Country>> {
-        Log.d("TRUONG", "CovidMapViewModel.getAllCountries")
+        Log.d(TAG, "CovidMapViewModel.getAllCountries")
         return data
     }
 }

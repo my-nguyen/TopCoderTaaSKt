@@ -13,8 +13,8 @@ class WorldFragment : Fragment() {
         val TAG = "TotalStatsFragment"
     }
 
-    lateinit var worldViewModel: WorldViewModel
-    lateinit var binding: FragmentWorldBinding
+    private lateinit var worldViewModel: WorldViewModel
+    private lateinit var binding: FragmentWorldBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +29,17 @@ class WorldFragment : Fragment() {
         worldViewModel = ViewModelProvider(this).get(WorldViewModel::class.java)
         binding = FragmentWorldBinding.inflate(inflater, container, false)
         val root = binding.root
-        worldViewModel.getWorld().observe(viewLifecycleOwner, object : Observer<World> {
-            override fun onChanged(data: World?) {
-                data?.let {
-                    binding.confirmedLastUpdate.text = it.data.lastUpdate
-                    binding.confirmedCount.text = it.data.totalCases
-                    binding.infectedLastUpdate.text = it.data.lastUpdate
-                    binding.infectedCount.text = it.data.currentlyInfected
-                    binding.recoveredLastUpdate.text = it.data.lastUpdate
-                    binding.recoveredCount.text = it.data.recoveryCases
-                    binding.deadLastUpdate.text = it.data.lastUpdate
-                    binding.deadCount.text = it.data.deathCases
-                }
-            }
-        })
+        worldViewModel.getWorld().observe(viewLifecycleOwner,
+            Observer<World> {
+                binding.confirmedLastUpdate.text = it.data.lastUpdate
+                binding.confirmedCount.text = it.data.totalCases
+                binding.infectedLastUpdate.text = it.data.lastUpdate
+                binding.infectedCount.text = it.data.currentlyInfected
+                binding.recoveredLastUpdate.text = it.data.lastUpdate
+                binding.recoveredCount.text = it.data.recoveryCases
+                binding.deadLastUpdate.text = it.data.lastUpdate
+                binding.deadCount.text = it.data.deathCases
+            })
 
         // confirmedIcon.setColorFilter(resources.getColor(R.color.yellow))
         return root
@@ -68,7 +65,7 @@ class WorldFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (requestCode == WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST) {
-            Utils.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
+            Utils.onRequestPermissionsResult(this, grantResults)
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }

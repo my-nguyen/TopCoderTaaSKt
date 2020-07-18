@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nguyen.topcodertaas_kt.databinding.ItemCountryBinding
 import com.squareup.picasso.Picasso
 
-class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
+class CountriesAdapter(val countries: List<Country>) : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class ViewHolder(private val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             binding.root.setOnClickListener(this)
         }
@@ -29,25 +29,17 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
         override fun onClick(view: View) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                val country = this@CountriesAdapter.countries.get(position)
+                val country = this@CountriesAdapter.countries[position]
                 BottomSheetFragment.show(context, country)
             }
         }
     }
 
     var lastUpdate: String? = null
-    val countries = mutableListOf<Country>()
     lateinit var context: Context
 
-    val TAG = "CountriesAdapter"
-
-    fun update(list: List<Country>) {
-        val size = itemCount
-        Log.d(TAG, "udpate with size: " + size)
-        if (size != 0) {
-            this.countries.addAll(list)
-            notifyItemRangeInserted(size, list.size)
-        }
+    companion object {
+        val TAG = "CountriesAdapter"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,7 +50,7 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val country = countries.get(position)
+        val country = countries[position]
         holder.bind(country)
     }
 

@@ -12,31 +12,31 @@ import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nguyen.topcodertaas_kt.databinding.FragmentBottomSheetBinding
 
-class BottomSheetFragment() : BottomSheetDialogFragment() {
+class BottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         val TAG = "BottomSheetDialogFragment"
-        val PARAM_COUNTRY = TAG + ":" + "Country"
+        const val EXTRA_COUNTRY_OBJECT = "COUNTRY_OBJECT"
 
         fun show(context: Context, country: Country) {
             val fragment = newInstance(country)
-            fragment.show((context as MainActivity).getSupportFragmentManager(), fragment.getTag())
+            fragment.show((context as MainActivity).supportFragmentManager, fragment.tag)
         }
 
-        fun newInstance(country: Country) : BottomSheetFragment {
+        private fun newInstance(country: Country) : BottomSheetFragment {
             val fragment = BottomSheetFragment()
             val args = Bundle()
-            args.putSerializable(PARAM_COUNTRY, country)
+            args.putSerializable(EXTRA_COUNTRY_OBJECT, country)
             fragment.arguments = args
             return fragment
         }
     }
 
-    lateinit var binding: FragmentBottomSheetBinding
+    private lateinit var binding: FragmentBottomSheetBinding
     lateinit var country: Country
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        country = getArguments()?.getSerializable(PARAM_COUNTRY) as Country
+        country = arguments?.getSerializable(EXTRA_COUNTRY_OBJECT) as Country
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,8 +49,8 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
             getColor(R.color.color_dead))
         pieDataSet.colors = colors
         val pieData = PieData(pieDataSet)
-        binding.pieChart.getDescription().isEnabled = false
-        binding.pieChart.getLegend().isEnabled = false
+        binding.pieChart.description.isEnabled = false
+        binding.pieChart.legend.isEnabled = false
         binding.pieChart.data = pieData
         // pieChart.animateXY(5000, 5000)
         binding.pieChart.invalidate()
@@ -66,12 +66,12 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
         return view
     }
 
-    fun getColor(resource: Int) : Int {
+    private fun getColor(resource: Int) : Int {
         // return getResources().getColor(resource)
         return ContextCompat.getColor(requireContext(), resource)
     }
 
-    fun getData() : List<PieEntry> {
+    private fun getData() : List<PieEntry> {
         val entries = mutableListOf<PieEntry>()
         entries.add(PieEntry(toFloat(country.activeCases), "Infected"))
         entries.add(PieEntry(toFloat(country.totalRecovered), "Recovered"))
@@ -79,20 +79,11 @@ class BottomSheetFragment() : BottomSheetDialogFragment() {
         return entries
     }
 
-    fun toFloat(number: String) : Float {
-        if (number.equals("N/A")) {
-            return 0f
+    private fun toFloat(number: String) : Float {
+        return if (number == "N/A") {
+            0f
         } else {
-            return number.replace(",", "").toFloat()
-        }
-    }
-
-    fun toFloat(number: Int) : Float {
-        try {
-            return number.toFloat()
-        } catch (e: NumberFormatException) {
-            e.printStackTrace()
-            return 0f
+            number.replace(",", "").toFloat()
         }
     }
 }

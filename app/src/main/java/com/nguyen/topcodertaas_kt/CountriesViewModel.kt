@@ -3,7 +3,7 @@ package com.nguyen.topcodertaas_kt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
-class CountriesViewModel() : ViewModel() {
+class CountriesViewModel : ViewModel() {
     companion object {
         val TAG = "RegionStatsViewModel"
     }

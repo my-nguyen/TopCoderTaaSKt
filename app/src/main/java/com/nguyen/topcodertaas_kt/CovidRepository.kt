@@ -10,11 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object CovidRepository {
-    val TAG = "CovidRepository"
-    val BASE_URL = "https://corona-virus-stats.herokuapp.com/api/v1/cases/"
+    const val TAG = "CovidRepository"
+    private const val BASE_URL = "https://corona-virus-stats.herokuapp.com/api/v1/cases/"
 
-    val covidAPI: CovidAPI
-    // var currentPage = 1
+    private val covidAPI: CovidAPI
     var world: World? = null
     val countries = mutableListOf<Country>()
     var pagination = Countries.Pagination()
@@ -55,10 +54,10 @@ object CovidRepository {
             covidAPI.getCountries("total_cases", page).enqueue(object : Callback<Countries> {
                 override fun onResponse(call: Call<Countries>, response: Response<Countries>) {
                     response.body()?.let {
-                        data.value = it.data.countries
                         pagination = it.data.pagination
                         countries.addAll(it.data.countries)
-                        Log.d(TAG, "getCountries.onResponse, currentPage: " + pagination.currentPage)
+                        Log.d(TAG, "getCountries.onResponse, currentPage: ${pagination.currentPage}")
+                        data.value = it.data.countries
                     }
                 }
 
@@ -70,31 +69,37 @@ object CovidRepository {
             // page has been pre-fetched: return one page worth of data, which is 10 countries
             val from = (page - 1) * 10
             val to = page * 10
+            Log.d(TAG, "getCountries, prefetched from $from to $to")
+            val tmp = countries.subList(from, to)
+            Log.d(TAG, "getCountries, sublist size: ${tmp.count()}")
             data.value = countries.subList(from, to)
         }
         return data
     }
 
     fun getAllCountries() : LiveData<List<Country>> {
-        val allCountries = MutableLiveData<List<Country>>()
-        covidAPI.getCountries("total_cases", pagination.currentPage + 1).enqueue(object : Callback<Countries> {
-            override fun onResponse(call: Call<Countries>, response: Response<Countries>) {
-                // if (currentPage < response.body().data.pagination.totalPages) {
-                response.body()?.let {
-                    pagination = it.data.pagination
-                    Log.d(TAG, "getAllCountries.onResponse, currentPage: " + pagination.currentPage)
-                    countries.addAll(it.data.countries)
-                    getAllCountries()
-                } ?: run {
-                    Log.d(TAG, "getAllCountries.onResponse, setValue")
-                    allCountries.value = countries
-                }
-            }
+        val data = MutableLiveData<List<Country>>()
+        if (pagination.totalPages != 0 && pagination.currentPage >= pagination.totalPages) {
+            Log.d(TAG, "getAllCountries, data all fetched")
+            data.value = countries
+        } else {
+            covidAPI.getCountries("total_cases", pagination.currentPage + 1)
+                .enqueue(object : Callback<Countries> {
+                    override fun onResponse(call: Call<Countries>, response: Response<Countries>) {
+                        // if (currentPage < response.body().data.pagination.totalPages) {
+                        response.body()?.let {
+                            pagination = it.data.pagination
+                            Log.d(TAG, "getAllCountries.onResponse, currentPage: ${pagination.currentPage}")
+                            countries.addAll(it.data.countries)
+                            getAllCountries()
+                        }
+                    }
 
-            override fun onFailure(call: Call<Countries>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-        return allCountries
+                    override fun onFailure(call: Call<Countries>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+        return data
     }
 }
