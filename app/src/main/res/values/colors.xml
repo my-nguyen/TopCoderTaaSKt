@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="color_infected">#e7b416</color>
+    <color name="color_recovered">#2dc937</color>
+    <color name="color_dead">#cc3232</color>
+    <!--<color name="color_infected">#EFB700</color>
+    <color name="color_recovered">#008450</color>
+    <color name="color_dead">#B81D13</color>-->
+    <!--<color name="color_infected">#FF7800</color>
+    <color name="color_recovered">#4CBB17</color>
+    <color name="color_dead">#E60000</color>-->
+    <color name="blue">#296D98</color>
+    <!--<color name="blue">#3792CB</color>-->
+    <color name="yellow">#FFFF00</color>
+    <color name="orange">#FFA500</color>
+</resources>

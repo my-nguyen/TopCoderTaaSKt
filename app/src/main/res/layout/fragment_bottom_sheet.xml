@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="8dp">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:background="@color/colorAccent">
+
+            <ImageView
+                android:id="@+id/bottom_title_flag"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/bottom_title_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="38"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:orientation="horizontal"
+            android:paddingVertical="15dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:tint="@color/blue"
+                android:src="@drawable/ic_confirmed"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="56"
+                android:text="@string/label_confirmed_title"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                tools:text="USA"/>
+
+            <TextView
+                android:id="@+id/bottom_info_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="29"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="15dp"
+                tools:text="USA"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:orientation="horizontal"
+            android:paddingVertical="15dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:tint="@color/color_infected"
+                android:src="@drawable/ic_infected"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="56"
+                android:text="@string/label_infected_title"
+                android:textColor="@color/color_infected"
+                android:textSize="16sp"
+                tools:text="USA"/>
+
+            <TextView
+                android:id="@+id/bottom_info_infected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="29"
+                android:textColor="@color/color_infected"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="15dp"
+                tools:text="USA"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:orientation="horizontal"
+            android:paddingVertical="15dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:tint="@color/color_recovered"
+                android:src="@drawable/ic_recovered"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="56"
+                android:text="@string/label_recovered_title"
+                android:textColor="@color/color_recovered"
+                android:textSize="16sp"
+                tools:text="USA"/>
+
+            <TextView
+                android:id="@+id/bottom_info_recovered"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="29"
+                android:textColor="@color/color_recovered"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="15dp"
+                tools:text="USA"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:orientation="horizontal"
+            android:paddingVertical="15dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:tint="@color/color_dead"
+                android:src="@drawable/ic_dead"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="56"
+                android:text="@string/label_dead_title"
+                android:textColor="@color/color_dead"
+                android:textSize="16sp"
+                tools:text="USA"/>
+
+            <TextView
+                android:id="@+id/bottom_info_dead"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="29"
+                android:textColor="@color/color_dead"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="15dp"
+                tools:text="USA"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

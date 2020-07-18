@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_total_stats"
+        android:icon="@drawable/ic_confirmed"
+        android:title="@string/title_total_stats" />
+
+    <item
+        android:id="@+id/navigation_region_stats"
+        android:icon="@drawable/ic_region"
+        android:title="@string/title_region_stats" />
+
+    <item
+        android:id="@+id/navigation_covid_map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/title_covid_map" />
+
+</menu>

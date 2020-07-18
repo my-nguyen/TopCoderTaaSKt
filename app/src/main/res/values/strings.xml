@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TopCoder-TaaS-Kt</string>
+    <string name="title_total_stats">Total Stats</string>
+    <string name="title_region_stats">Region Stats</string>
+    <string name="title_covid_map">COVID Map</string>
+    <string name="label_confirmed_title">Total Confirmed Cases</string>
+    <string name="label_infected_title">Currently Infected</string>
+    <string name="label_recovered_title">Recovered</string>
+    <string name="label_dead_title">Dead</string>
+    <string name="label_last_update">Last update: %1$s</string>
+    <string name="label_country_name">Name</string>
+    <string name="menu_share">Share</string>
+</resources>
