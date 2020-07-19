@@ -58,7 +58,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap
-        Log.d(TAG, "CovidMapFragment.onMapReady")
+        Log.d(TAG, "onMapReady")
 
         // testMap()
         realMap()
@@ -75,7 +75,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun realMap() {
         mapViewModel.getAllCountries().observe(viewLifecycleOwner, Observer { allCountries ->
-            Log.d(TAG, "CovidMapFragment.onMapReady.getAllCountries.observe.onChanged")
+            Log.d(TAG, "getAllCountries.observe")
             // load all country lat-long coordinates from CSV file
             val coordinates = Coordinates(requireContext(), "countries.csv")
             var firstLatLng: LatLng? = null
@@ -87,6 +87,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     if (latLng != null) {
                         // make a marker from lat-long found
                         val marker = map.addMarker(MarkerOptions().position(latLng).title(allCountries[i].country))
+                        Log.d(TAG, "adding marker for ${allCountries[i].countryAbbreviation} with lat-lng $latLng")
                         // record country index in marker
                         marker.tag = i
                         // save the first lat-lng if necessary
@@ -97,6 +98,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
                 // move the camera to the first country in the list, which is USA
                 map.moveCamera(CameraUpdateFactory.newLatLng(firstLatLng))
+                Log.d(TAG, "moving camera to $firstLatLng")
+
+                // set click listener for all markers
                 map.setOnMarkerClickListener {
                     // retrieve from marker index of country selected
                     val index = it?.tag as Int

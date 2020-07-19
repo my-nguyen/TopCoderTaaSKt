@@ -52,9 +52,8 @@ class CountriesFragment : Fragment() {
 
     fun fetchPage(page: Int) {
         countriesViewModel.getCountries(page).observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, "fetchPage $page, list size: ${it.count()}")
             val size = countries.count()
-            Log.d(TAG, "update, current size: $size, new list size: ${it.count()}")
+            Log.d(TAG, "fetchPage $page, current size: $size, new list size: ${it.count()}")
             countries.addAll(it)
             // binding.recyclerView.post {
                 adapter.notifyItemRangeInserted(size, it.size)

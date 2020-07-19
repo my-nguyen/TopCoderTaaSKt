@@ -80,7 +80,7 @@ object CovidRepository {
     fun getAllCountries() : LiveData<List<Country>> {
         val data = MutableLiveData<List<Country>>()
         if (pagination.totalPages != 0 && pagination.currentPage >= pagination.totalPages) {
-            Log.d(TAG, "getAllCountries, data all fetched")
+            Log.d(TAG, "getAllCountries, data all fetched, size ${countries.count()}")
             data.value = countries
         } else {
             covidAPI.getCountries("total_cases", pagination.currentPage + 1)
